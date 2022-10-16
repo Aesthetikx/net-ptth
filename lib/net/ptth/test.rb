@@ -22,18 +22,16 @@ module Net
         loop do
           client = @server.accept
 
-          switch_protocols = <<-EOS.gsub(/^\s+/, '')
-            HTTP/1.1 101 Switching Protocols
-            Date: Mon, 14 Jan 2013 11:54:24 GMT
-            Upgrade: PTTH/1.0
-            Content-Length: 0
-            Connection: Upgrade
-          EOS
+          switch_protocols = "HTTP/1.1 101 Switching Protocols#{CRLF}" \
+                             "Date: Mon, 14 Jan 2013 11:54:24 GMT#{CRLF}" \
+                             "Upgrade: PTTH/1.0#{CRLF}" \
+                             "Connection: Upgrade#{CRLF}" \
+                             "#{CRLF}"
 
-          post_response  = "#{@response.method} #{@response.path} HTTP/1.1\n"
-          post_response += "Content-Length: #{@response.body.length}\n" if @response.body
-          post_response += "Accept: */*\n"
-          post_response += "\n"
+          post_response  = "#{@response.method} #{@response.path} HTTP/1.1#{CRLF}"
+          post_response += "Content-Length: #{@response.body.length}#{CRLF}" if @response.body
+          post_response += "Accept: */*#{CRLF}"
+          post_response += "#{CRLF}"
           post_response += @response.body if @response.body
 
           client.puts switch_protocols
