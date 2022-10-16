@@ -57,9 +57,8 @@ class Net::PTTH
     # Public: Resets the parser internal flags
     #
     def reset
-      @finished = false
-      @headers  = nil
-      @chunk    = ""
+      @parser.reset!
+      new_message_state
     end
 
     # Public: Access the body of the string being parsed
@@ -79,13 +78,21 @@ class Net::PTTH
     end
 
     def on_message_begin
-      reset
+      new_message_state
     end
 
     # Protected: Flags the parsing as ended
     #
     def on_message_complete
       @finished = true
+    end
+
+    private
+
+    def new_message_state
+      @finished = false
+      @headers  = nil
+      @chunk    = ""
     end
   end
 end
