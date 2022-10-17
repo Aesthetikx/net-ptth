@@ -1,11 +1,7 @@
-require "celluloid/io"
-
 class Net::PTTH
   SocketError = Class.new(StandardError)
 
   Socket = Struct.new(:host, :port) do
-    include Celluloid::IO
-
     def read(bytes = 4096*10)
       raw_socket.readpartial(bytes)
     end

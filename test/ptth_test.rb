@@ -23,9 +23,15 @@ describe "Using a Rack compatible app to receive requests" do
   def check_app_compatibility(app)
     @ptth.app = app
 
-    @ptth.async.request(@request)
-    sleep 1
+    Thread.new { @ptth.request(@request) }
+
+    sleep(1)
+
+    # TODO: Expect something to have happened
+
     @ptth.close
+
+    sleep(1)
   end
 
   it "should be able to receive a Cuba app" do
@@ -74,6 +80,14 @@ describe "PTTH Test server" do
       end
     end
 
-    ptth.request(request)
+    Thread.new { ptth.request(request) }
+
+    sleep(1)
+
+    ptth.close
+
+    sleep(1)
+
+    # TODO: Expect something to have happened
   end
 end

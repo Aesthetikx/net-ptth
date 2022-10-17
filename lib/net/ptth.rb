@@ -14,8 +14,6 @@ require "net/ptth/outgoing_request"
 #   Attempts to mimic HTTP when applicable
 #
 class Net::PTTH
-  include Celluloid
-
   attr_accessor :app
 
   CRLF = "\r\n".freeze
@@ -40,12 +38,6 @@ class Net::PTTH
   #
   def set_debug_output=(output)
     @debug_output = output
-
-    Celluloid.logger = if output.respond_to?(:debug)
-                         output
-                       else
-                         ::Logger.new(output)
-                       end
   end
 
   # Public: Closes de current connection
@@ -137,8 +129,8 @@ class Net::PTTH
       response
     end
 
-  rescue IOError => e
-  rescue EOFError => e
+  rescue => e
+    puts "CAUGHT #{e}"
     close
   end
 

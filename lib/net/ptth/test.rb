@@ -39,6 +39,9 @@ module Net
           client.puts post_response
           client.read unless client.eof?
         end
+      rescue => e
+        puts "XCAUGHT #{e}"
+        close
       end
 
       # Public: Stops the current server
