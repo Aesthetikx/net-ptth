@@ -16,6 +16,6 @@ Gem::Specification.new do |s|
   s.add_dependency("http_parser.rb", ">= 0.6.0.beta.2")
 
   s.add_development_dependency("minitest", "~> 4.4.0")
-  s.add_development_dependency("cuba", "~> 3.1.0")
-  s.add_development_dependency("sinatra", "~> 1.3.3")
+  s.add_development_dependency("cuba", "< 4")
+  s.add_development_dependency("sinatra", "< 4")
 end
